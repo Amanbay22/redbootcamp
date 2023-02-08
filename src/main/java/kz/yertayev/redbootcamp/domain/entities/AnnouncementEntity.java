@@ -9,6 +9,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import kz.yertayev.redbootcamp.model.announcement.AnnouncementState;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,7 +30,9 @@ public class AnnouncementEntity extends AbstractEntity {
   @NotBlank
   private String imageUrl;
   @NotBlank
-  private String userEmail;
+  private String sellerEmail;
+  @NotBlank
+  private String buyerEmail;
   private LocalDateTime expiredDate;
   @NotNull
   @Enumerated(EnumType.STRING)

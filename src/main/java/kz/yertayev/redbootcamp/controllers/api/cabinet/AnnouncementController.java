@@ -1,10 +1,11 @@
 package kz.yertayev.redbootcamp.controllers.api.cabinet;
 
-import jakarta.persistence.EntityNotFoundException;
 import java.security.SignatureException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import kz.yertayev.redbootcamp.model.announcement.AnnouncementDto;
+import kz.yertayev.redbootcamp.model.bid.Bid;
 import kz.yertayev.redbootcamp.model.error.ApiError;
 import kz.yertayev.redbootcamp.services.IAnnouncementService;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +30,19 @@ public class AnnouncementController {
   public ResponseEntity<Void> create(@RequestBody AnnouncementDto dto) {
     announcementService.createAnnouncement(dto);
     return ResponseEntity.ok().build();
+  }
+
+  @PreAuthorize("hasAuthority('ROLE_USER')")
+  @PostMapping("/bid")
+  public ResponseEntity<Void> takeBid(@RequestBody Bid bid) {
+    announcementService.takeBid(bid);
+    return ResponseEntity.ok().build();
+  }
+
+  @PreAuthorize("hasAuthority('ROLE_USER')")
+  @GetMapping("/")
+  public ResponseEntity<Set<AnnouncementDto>> getAll() {
+    return ResponseEntity.ok(announcementService.getAnnouncements());
   }
 
   @ExceptionHandler(SignatureException.class)
