@@ -17,4 +17,13 @@ public interface AnnouncementRepository extends JpaRepository<AnnouncementEntity
 
   @Query("select a from AnnouncementEntity a where a.state = 'ACTIVE'")
   Set<AnnouncementEntity> findAllActive();
+
+  @Query("select a from AnnouncementEntity a "
+      + "where a.state = 'ACTIVE'"
+      + "and ((:sellerEmail is null) or a.sellerEmail = :sellerEmail)"
+      + "and ((:minPrice is null) or a.minPrice >= :minPrice)")
+  Set<AnnouncementEntity> findAllActiveByFilter(
+      String sellerEmail,
+      Double minPrice
+  );
 }

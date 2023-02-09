@@ -7,6 +7,7 @@ import java.util.Set;
 import kz.yertayev.redbootcamp.model.announcement.AnnouncementDto;
 import kz.yertayev.redbootcamp.model.bid.Bid;
 import kz.yertayev.redbootcamp.model.error.ApiError;
+import kz.yertayev.redbootcamp.model.error.BidException;
 import kz.yertayev.redbootcamp.services.IAnnouncementService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -45,10 +47,23 @@ public class AnnouncementController {
     return ResponseEntity.ok(announcementService.getAnnouncements());
   }
 
-  @ExceptionHandler(SignatureException.class)
-  public ResponseEntity<ApiError> handleContentNotAllowedException(SignatureException unfe) {
-    List<String> errors = Collections.singletonList(unfe.getMessage());
+  @PreAuthorize("hasAuthority('ROLE_USER')")
+  @GetMapping("/filter")
+  public ResponseEntity<Set<AnnouncementDto>> getAllWithFilters(
+        @RequestParam(required = false) String sellerEmail,
+      @RequestParam(required = false) Double minPrice
+  ) {
+    return ResponseEntity.ok(
+        announcementService.getAnnouncementsByFilter(
+            sellerEmail,
+            minPrice)
+    );
+  }
 
-    return new ResponseEntity<>(new ApiError(errors), HttpStatus.UNAUTHORIZED);
+  @ExceptionHandler(BidException.class)
+  public ResponseEntity<ApiError> handleContentNotAllowedException(BidException e) {
+    List<String> errors = Collections.singletonList(e.getMessage());
+
+    return new ResponseEntity<>(new ApiError(errors), HttpStatus.BAD_REQUEST);
   }
 }

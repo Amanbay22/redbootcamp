@@ -36,11 +36,16 @@ public class SchedulerService {
         announcementRepository.findAllByStateAndExpiredDate(AnnouncementState.ACTIVE, now);
 
     for (AnnouncementEntity an : announcements) {
-      MessageKafka kafka = new MessageKafka();
-      kafka.setMsg(an.getDescription());
-      kafka.setAnnouncementName(an.getName());
+      MessageKafka kafka = MessageKafka.builder()
+          .announcementName(an.getName())
+          .price(an.getActivePrice())
+          .sellerEmail(an.getSellerEmail())
+          .buyerEmail(an.getBuyerEmail())
+          .build();
+
       template.send("msg", objectMapper.writeValueAsString(kafka));
       template.send("msg1", objectMapper.writeValueAsString(kafka));
+
       an.setState(AnnouncementState.ARCHIVE);
     }
 

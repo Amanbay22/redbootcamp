@@ -9,5 +9,10 @@ public interface IAnnouncementService {
 
   Set<AnnouncementDto> getAnnouncements();
 
+  Set<AnnouncementDto> getAnnouncementsByFilter(
+      String sellerEmail,
+      Double minPrice
+  );
+
   void takeBid(Bid bid);
 }

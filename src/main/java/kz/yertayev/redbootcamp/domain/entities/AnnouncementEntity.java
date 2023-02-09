@@ -29,9 +29,7 @@ public class AnnouncementEntity extends AbstractEntity {
   private Double activePrice;
   @NotBlank
   private String imageUrl;
-  @NotBlank
   private String sellerEmail;
-  @NotBlank
   private String buyerEmail;
   private LocalDateTime expiredDate;
   @NotNull

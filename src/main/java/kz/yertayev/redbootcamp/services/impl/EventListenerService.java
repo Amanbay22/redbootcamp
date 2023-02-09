@@ -19,14 +19,28 @@ public class EventListenerService {
   @SneakyThrows
   public void sendNotificationEmailSeller(String msg) {
     MessageKafka kafka = objectMapper.readValue(msg, MessageKafka.class);
-    log.warn("Ypu announcement was sell {}", kafka.getAnnouncementName());
+    log.info("Seller {} announcement was sell {}",
+        kafka.getSellerEmail(),
+        kafka.getAnnouncementName());
   }
 
   @KafkaListener(id = "group-2", topics = "msg1")
   @SneakyThrows
   public void sendNotificationEmailBuyer(String msg) {
     MessageKafka kafka = objectMapper.readValue(msg, MessageKafka.class);
-    log.warn("Buyer your successfully by announcement  {}", kafka.getAnnouncementName());
+    log.info("Buyer {} your successfully by announcement  {}",
+        kafka.getBuyerEmail(),
+        kafka.getAnnouncementName());
 
+  }
+
+  @KafkaListener(id = "group-3", topics = "msg2")
+  @SneakyThrows
+  public void sendNotificationEmailOutBid(String msg) {
+    MessageKafka kafka = objectMapper.readValue(msg, MessageKafka.class);
+    log.info("{} bid has been outbid name: {}, price: {}",
+        kafka.getBuyerEmail(),
+        kafka.getAnnouncementName(),
+        kafka.getPrice());
   }
 }

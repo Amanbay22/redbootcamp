@@ -26,7 +26,7 @@ public class AuthServiceImpl implements IAuthService {
   public AuthenticationResponse register(AuthenticationRequest request) {
     UserEntity user = UserEntity.builder()
         .email(request.getEmail())
-        .password(request.getPassword())
+        .password(passwordEncoder.encode(request.getPassword()))
         .roles(Set.of(Roles.ROLE_USER))
         .build();
 
