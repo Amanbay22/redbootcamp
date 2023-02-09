@@ -51,4 +51,9 @@ In future more migration, and moments-hibernate-ddl-auto
 * wait some time until DB starts 
 * start redbootcampl from IDEA
 * Do not forget to do `docker volume prune` after stopping docker compose stack if you need to recreate DB
+* postman collectin: 
+1. create user 
+2. get token
+3. use token to get announcement
+4. takeBid - endpoint to do bid
 
