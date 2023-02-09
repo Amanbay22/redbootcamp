@@ -9,7 +9,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import kz.yertayev.redbootcamp.model.announcement.AnnouncementState;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,14 +19,14 @@ import lombok.Setter;
 @Table(name = "announcements")
 @NoArgsConstructor
 public class AnnouncementEntity extends AbstractEntity {
-  @NotBlank
+  @NotNull
   private String name;
   @NotBlank
   private String description;
   @Min(value = 100)
   private Double minPrice;
   private Double activePrice;
-  @NotBlank
+  @NotNull
   private String imageUrl;
   private String sellerEmail;
   private String buyerEmail;

@@ -8,6 +8,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -30,7 +31,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 @AllArgsConstructor
 public class UserEntity extends AbstractEntity implements UserDetails {
 
+  @NotNull
   private String email;
+  @NotNull
   private String password;
 
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)

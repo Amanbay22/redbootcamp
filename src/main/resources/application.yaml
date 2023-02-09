@@ -21,3 +21,8 @@ jwt:
 server:
   servlet:
     context-path: /api/v1
+
+schedule:
+  announcement:
+    expire:
+      delay: 30000

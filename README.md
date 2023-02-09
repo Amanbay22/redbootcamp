@@ -1,5 +1,8 @@
 RedBootCamp
 
+##Swagger - OpenApi
+http://localhost:8080/api/v1/swagger-ui/index.html#/
+
 ## Build instructions
 
 ## Code Style
