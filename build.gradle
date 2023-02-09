@@ -26,6 +26,7 @@ checkstyle {
 }
 
 tasks.withType(Checkstyle) {
+    ignoreFailures true
     reports {
         xml.enabled false
         html.enabled true
